@@ -1,37 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import PropTypes from 'prop-types';
 
-interface ITodo {
-  id: number;
-  title: string;
+import { IAplicationState } from '../../store';
+import { ITodo } from '../../store/ducks/todos/types';
+
+import * as TodosActions from '../../store/ducks/todos/actions';
+
+interface IStateProps {
+  todos: ITodo[];
 }
 
-const TodoList: React.FC = () => {
-  const todos: ITodo[] = [
-    {
-      id: Math.random(),
-      title: 'Fazer café',
-    },
-    {
-      id: Math.random(),
-      title: 'Estudar react',
-    },
-    {
-      id: Math.random(),
-      title: 'Estudar redux',
-    },
-    {
-      id: Math.random(),
-      title: 'Estudar Sagas',
-    },
-  ];
+interface IDispatchProps {
+  loadRequest(): void;
+  loadSuccess(data: ITodo[]): void;
+}
 
+type IProps = IStateProps & IDispatchProps;
+
+const TodoList: React.FC<IProps> = ({ todos }) => {
   return (
     <ul>
-      {todos.map(({ id, title }) => (
-        <li key={id}>{title}</li>
+      {todos.map((todo) => (
+        <li key={todo.id}>{todo.title}</li>
       ))}
     </ul>
   );
 };
 
-export default TodoList;
+TodoList.propTypes = {
+  todos: PropTypes.array.isRequired,
+};
+
+const mapStateToProps = ({ todos }: IAplicationState) => ({
+  todos: todos.data,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(TodosActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
