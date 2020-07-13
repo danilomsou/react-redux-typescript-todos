@@ -1,9 +1,8 @@
 import { action, Action } from 'typesafe-actions';
-import { TodosTypes, ITodo } from './types';
+import { TodosTypes } from './types';
 
-export const loadRequest = (): Action => action(TodosTypes.LOAD_REQUEST);
+export const addTodo = (title: string): Action => action(TodosTypes.ADD, title);
 
-export const loadSuccess = (data: ITodo[]): Action =>
-  action(TodosTypes.LOAD_SUCCESS, data);
+export const toggleTodo = (id: number): Action => action(TodosTypes.TOGGLE, id);
 
-export const loadFailure = (): Action => action(TodosTypes.LOAD_FAILURE);
+export const removeTodo = (id: number): Action => action(TodosTypes.REMOVE, id);

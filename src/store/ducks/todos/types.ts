@@ -2,9 +2,9 @@
  * Actions types
  */
 export enum TodosTypes {
-  LOAD_REQUEST = '@todos/LOAD_REQUEST',
-  LOAD_SUCCESS = '@todos/LOAD_SUCCESS',
-  LOAD_FAILURE = '@todos/LOAD_FAILURE',
+  ADD = '@todos/ADD',
+  TOGGLE = '@todos/TOGGLE',
+  REMOVE = '@todos/REMOVE',
 }
 
 /**
@@ -14,6 +14,7 @@ export enum TodosTypes {
 export interface ITodo {
   id: number;
   title: string;
+  complete: boolean;
 }
 
 /**
